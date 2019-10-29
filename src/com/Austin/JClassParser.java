@@ -111,7 +111,7 @@ public class JClassParser {
         if (T == token()) {
 
             // put a println here!
-            System.out.println(token());
+            // System.out.println(token());
             advancePtr();
         }
         else error();
@@ -162,28 +162,22 @@ public class JClassParser {
             className();
             varRef();
         }
+        else error();
     }
     private void type() {
-        if(token() == 'I')
-            match('I');
-        else if(token() == 'S')
-            match('S');
+        if(token() == 'I' || token() == 'S')
+            match(token());
         else error();
     }
     private void varName() {
-        if(token()=='V' || token()=='S' )
-            match(token());
-//        if(token() == 'V')
-//            match('V');
-//        else if(token() == 'S')
-//            match('S');
-        else error();
+        letter();
+        while(token() == 'Y' || token() == 'Z' || token() == '0' ||token() == '1' ||token() == '2' || token() == '3'){
+            ch();
+        }
     }
     private void letter() {
-        if(token() == 'Y')
-            match('Y');
-        else if(token() == 'Z')
-            match('Z');
+        if(token() == 'Y' || token() == 'Z')
+            match(token());
         else error();
     }
     private void ch() {
@@ -451,7 +445,7 @@ public class JClassParser {
         jClass();
         match('$');
         if(errorFlag == 0)
-            System.out.println("legal.\n");
+            System.out.println("\nThis input string is legal.\n");
         else
             System.out.println("errors found.\n");
     }
@@ -469,9 +463,21 @@ public class JClassParser {
 
 
         // prompt user for a string
-        System.out.print("\nenter a string of stuff: ");
-        inputString = kb.next();
+        // System.out.print("\nenter a string of stuff: ");
+//        inputString = kb.next();
+
+
+        /*
+        inputString = "CXDBIY;E$";
         System.out.println(inputString);
+        parser.start();
+        */
+        String test1 = "DXCBDZ;E$";
+        String test2 = "CXDBIY;E$";
+        String test3 = "CXCBIY;PSN(S)BF(0<1)TBY=2;RZ;E$";
+
+        inputString = "DXDBDK;E$";
+        System.out.println(test3);
         parser.start();
     }
 
