@@ -148,14 +148,9 @@ public class JClassParser {
     private void varList() {
         varDef();
         while(token() == ',') {
+            match(',');
             varDef();
         }
-        // check that the next token is in follow of varList? else error....
-        // follow(varList) = {;, )}
-        // maybe use de'Morgans here if ( token != ';' && token != ')'
-        if(token() == ';' || token() == ')')
-            return;
-        else error();
     }
     //<varDef> ::= <type> <varname> | <classname> <varRef>
     private void varDef() {
@@ -176,10 +171,12 @@ public class JClassParser {
         else error();
     }
     private void varName() {
-        if(token() == 'V')
-            match('V');
-        else if(token() == 'S')
-            match('S');
+        if(token()=='V' || token()=='S' )
+            match(token());
+//        if(token() == 'V')
+//            match('V');
+//        else if(token() == 'S')
+//            match('S');
         else error();
     }
     private void letter() {
@@ -442,6 +439,11 @@ public class JClassParser {
         varRef();
         match('.');
         methodName();
+        match('(');
+        if(token() == 'I' || token() == 'S' || token() == 'C' || token() == 'D'){
+            varList();
+        }
+        match(')');
     }
 
 
