@@ -51,50 +51,8 @@ import java.util.*;
  *
  */
 
-/**
-//Java Class <jClass > ::=  <className>  B  < varList> {<method>}   E
- //calculate the first(<method>) to get the condition of the while loop....
- //first(<method>) = {'P'}
 
 
-
-//Class Name <className>  ::= C|D
-
-
-
-// Variable List<varList>::=  <varDef>{, <varDef>};
- //first(, <varDef>) = {','}
- // at the end check that the next token is in follow of varList = {;, )}
-
-
-
-// Variable Declaration<varDef>::=<type> <varName>
-
- //Type <type> ::= I | S
-
-// Variable Names<varName>::= V|Z
-
-// Class Method<method> ::= P <type> <methodName> (<varDef>{,<varDef>}) B <stmnt> <returnstmnt>E
- //first(,varDef) = {','}
-
-
- //Method Name<methodName>::=  M|N
-
-// Statement<stmnt>::= <ifstmnt>|<assignstmnt>|<whilestmnt>
-
-// If statement<ifstmnt>::= F <cond>T B {<stmnt>} E [L B { <stmnt>} E]
- //first(stmnt) = {F, Y, Z, J, K, W}
-
-// Assignment Statement<assignstmnt>::= <varName>= <digit>;
-
-// While Statement<whilestmnt>::= W <cond>T B <stmnt>{<stmnt>} E
-
-// Condition<cond>::= (<varName>== <digit>)
-
- // Digit<digit> ::= 0|1|2|3|4|5|6|7|8|9
-
-// Return Statement<returnstmnt>::= R <varName>;//
-*/
 public class JClassParser {
     static String inputString;
     int index = 0;
@@ -109,9 +67,6 @@ public class JClassParser {
     }
     private void match(char T) {
         if (T == token()) {
-
-            // put a println here!
-            // System.out.println(token());
             advancePtr();
         }
         else error();
@@ -121,9 +76,6 @@ public class JClassParser {
         errorFlag = 1;
         advancePtr();
     }
-    //Java Class <jClass > ::=  <className>  B  < varList> {<method>}   E
-    //calculate the first(<method>) to get the condition of the while loop....
-    //first(<method>) = {'P'}
     private void jClass() {
         className();
         if(token() == 'X'){
@@ -364,17 +316,11 @@ public class JClassParser {
     // While Statement<whilestmnt>::= W <cond>T B <stmnt>{<stmnt>} E
     // first(stmnt) = {F, Y, Z, J, K, W}
     private void whilestatemt() {
-        if(token() == 'W')
-            match('W');
-        else error();
 
-
+        match('W');
         cond();
+        match('T');
 
-
-        if(token() == 'T')
-            match('T');
-        else error();
 
 
         if(token() == 'B')
@@ -402,7 +348,6 @@ public class JClassParser {
         match(')');
     }
     private void operator() {
-        //TODO
         switch(token()){
             case '<':
                 match('<');
@@ -422,14 +367,11 @@ public class JClassParser {
     }
 
     private void returnstatemt() {
-        if(token() == 'R')
-            match('R');
-        else error();
+        match('R');
         varName();
         match(';');
     }
     private void methodCall() {
-        //TODO
         varRef();
         match('.');
         methodName();
@@ -474,10 +416,10 @@ public class JClassParser {
         */
         String test1 = "DXCBDZ;E$";
         String test2 = "CXDBIY;E$";
-        String test3 = "CXCBIY;PSN(S)BF(0<1)TBY=2;RZ;E$";
+        inputString = "CXCBIY;PSN(S)BF(0<1)TBY=2;RZ;E$";
 
-        inputString = "DXDBDK;E$";
-        System.out.println(test3);
+        // inputString = "DXDBDK;E$";
+        // System.out.println(test3);
         parser.start();
     }
 
